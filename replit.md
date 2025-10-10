@@ -1,10 +1,29 @@
 # Overview
 
-This is a React-based user dashboard application built with Vite, featuring Firebase Realtime Database for data persistence and OpenWeatherMap API integration for location data. The application follows a feature-based architecture pattern, organizing code by features rather than by file types. Users can add, edit, and delete user records with automatic location data fetching based on zip codes. The application is configured to run on Replit with TypeScript support available.
+This is a React-based user dashboard application built with Vite, featuring Firebase Realtime Database for data persistence and OpenWeatherMap API integration for location data. The application follows a feature-based architecture pattern, organizing code by features rather than by file types. Users can add, edit, and delete user records with automatic location data fetching based on zip codes. The app includes toast notifications for user feedback, human-readable timezone formatting, and real-time search/filter functionality. The application is configured to run on Replit with TypeScript support available.
 
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+# Recent Changes
+
+## October 10, 2025 - UX Enhancements
+- **Toast Notifications**: Added Chakra UI v3 toaster system for user feedback
+  - Success toasts for add/update/delete operations
+  - Error toasts with specific, user-friendly messages for API failures
+  - Weather API errors now properly categorized (invalid zip, network errors, API key issues)
+- **Timezone Display**: Improved timezone formatting from raw seconds to human-readable format
+  - UTC-4:00, UTC+5:30, UTC (for zero offset)
+  - Consistent HH:MM format for all timezones
+- **Search/Filter**: Added real-time search functionality
+  - Case-insensitive search by name or zip code
+  - Defensive normalization handles null/numeric values safely
+  - Empty state messages for no results
+- **Error Handling**: Enhanced weatherService with specific error messages
+  - 404: Invalid zip code with helpful message
+  - 401: API key configuration error
+  - Network errors clearly identified
 
 # System Architecture
 
