@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Button,
   Input,
@@ -11,38 +11,38 @@ import {
   DialogFooter,
   DialogTitle,
   DialogCloseTrigger,
-  Field
-} from '@chakra-ui/react';
-import { useAddUser } from '../hooks/useAddUser';
+  Field,
+} from "@chakra-ui/react";
+import { useAddUser } from "../hooks/useAddUser";
 
 export function AddUserModal({ isOpen, onClose }) {
-  const [name, setName] = useState('');
-  const [zipCode, setZipCode] = useState('');
+  const [name, setName] = useState("");
+  const [zipCode, setZipCode] = useState("");
   const { mutate: addUser, isPending, error } = useAddUser();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     addUser(
       { name, zipCode },
       {
         onSuccess: () => {
-          setName('');
-          setZipCode('');
+          setName("");
+          setZipCode("");
           onClose();
         },
-      }
+      },
     );
   };
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onClose}>
+    <DialogRoot open={isOpen} onOpenChange={onClose} placement={'top'}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add New User</DialogTitle>
           <DialogCloseTrigger />
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit}>
           <DialogBody>
             <Stack gap={4}>
@@ -55,7 +55,7 @@ export function AddUserModal({ isOpen, onClose }) {
                   required
                 />
               </Field.Root>
-              
+
               <Field.Root required>
                 <Field.Label>Zip Code</Field.Label>
                 <Input
@@ -79,7 +79,7 @@ export function AddUserModal({ isOpen, onClose }) {
               Cancel
             </Button>
             <Button type="submit" disabled={isPending} colorScheme="blue">
-              {isPending ? 'Adding...' : 'Add User'}
+              {isPending ? "Adding..." : "Add User"}
             </Button>
           </DialogFooter>
         </form>
