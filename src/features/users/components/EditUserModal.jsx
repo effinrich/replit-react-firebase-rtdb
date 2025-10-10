@@ -11,10 +11,10 @@ import {
   DialogFooter,
   DialogTitle,
   DialogCloseTrigger,
-  Field,
-  Portal,
   DialogBackdrop,
   DialogPositioner,
+  Field,
+  Portal
 } from "@chakra-ui/react";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 

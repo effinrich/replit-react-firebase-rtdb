@@ -11,7 +11,10 @@ import {
   DialogFooter,
   DialogTitle,
   DialogCloseTrigger,
+  DialogBackdrop,
+  DialogPositioner,
   Field,
+  Portal,
 } from "@chakra-ui/react";
 import { useAddUser } from "../hooks/useAddUser";
 
@@ -36,10 +39,13 @@ export function AddUserModal({ isOpen, onClose }) {
   };
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onClose}
+    <DialogRoot
+      open={isOpen}
+      onOpenChange={onClose}
       size="md"
-      placement={'top'}
-      motionPreset="slide-in-bottom">
+      placement={"top"}
+      motionPreset="slide-in-bottom"
+    >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add New User</DialogTitle>
