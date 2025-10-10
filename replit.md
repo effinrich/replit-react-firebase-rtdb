@@ -1,6 +1,6 @@
 # Overview
 
-This is a React-based web application built with Vite as the build tool and bundler. The project uses Firebase Realtime Database for data persistence and demonstrates real-time messaging functionality. Users can add messages through a form, and all messages sync instantly across all connected clients. The application is configured to run on Replit with TypeScript support available.
+This is a React-based user dashboard application built with Vite, featuring Firebase Realtime Database for data persistence and OpenWeatherMap API integration for location data. The application follows a feature-based architecture pattern, organizing code by features rather than by file types. Users can add, edit, and delete user records with automatic location data fetching based on zip codes. The application is configured to run on Replit with TypeScript support available.
 
 # User Preferences
 
@@ -14,15 +14,37 @@ Preferred communication style: Simple, everyday language.
 - **Language Support**: JavaScript with optional TypeScript support (configured via tsconfig.json)
 - **Build Tool**: Vite with React plugin for JSX/TSX transformation
 
-## Component Structure
-- Entry point: `src/index.jsx` loaded from `index.html`
-- Firebase configuration: `src/firebase.js` initializes Firebase and exports database instance
-- Main component: `App.jsx` - implements real-time messaging with Firebase hooks
-  - Uses useState for local message input state
-  - Uses useEffect with onValue listener for real-time database subscriptions
-  - Handles message submission with push() and set() operations
-- Styling: `App.css` provides clean, modern UI styling
-- Configuration example: `.env.example` documents required environment variables
+## Architecture Pattern: Feature-Based
+
+The project uses a feature-based architecture where code is organized by feature domains rather than file types:
+
+```
+src/
+  features/
+    users/
+      components/       # UI components for user feature
+      services/         # Business logic and API calls
+      hooks/           # Custom React hooks
+      index.js         # Feature exports
+  providers/          # Global providers (Chakra UI, React Query)
+  App.jsx            # Main application component
+  firebase.js        # Firebase configuration
+```
+
+### Users Feature Components
+- **UserTable**: Main dashboard displaying users in a table with CRUD operations
+- **AddUserModal**: Dialog with form to add new users (name, zip code)
+- **EditUserModal**: Dialog with form to edit existing users
+
+### Services Layer
+- **userService.js**: Firebase CRUD operations (getUsers, addUser, updateUser, deleteUser)
+- **weatherService.js**: OpenWeatherMap API integration for location data
+
+### Custom Hooks
+- **useUsers**: Fetches all users with React Query
+- **useAddUser**: Mutation hook for adding users with location data
+- **useUpdateUser**: Mutation hook for updating users (re-fetches location if zip changes)
+- **useDeleteUser**: Mutation hook for deleting users
 
 ## Development Configuration
 - **Dev Server**: Vite dev server running on port 5000
@@ -31,10 +53,37 @@ Preferred communication style: Simple, everyday language.
 - **Hot Reload**: Fast refresh enabled for instant development feedback
 
 ## Data Architecture
-- **State Management**: React's built-in hooks (useState for UI state, useEffect for subscriptions)
-- **Real-time data synchronization**: Firebase Realtime Database with onValue listeners
-- **Data Structure**: Messages stored at `/messages` path with auto-generated IDs
-- **Message Schema**: Each message contains `text` (string) and `timestamp` (number)
+- **State Management**: 
+  - React's built-in hooks (useState for local UI state)
+  - @tanstack/react-query for server state management and caching
+- **API Communication**: axios for HTTP requests
+- **Real-time data synchronization**: Firebase Realtime Database
+- **Data Structure**: Users stored at `/users` path with auto-generated IDs
+- **User Schema**: 
+  ```json
+  {
+    "id": "string (auto-generated)",
+    "name": "string",
+    "zipCode": "string",
+    "latitude": "number",
+    "longitude": "number",
+    "timezone": "number (seconds offset from UTC)",
+    "createdAt": "number (timestamp)",
+    "updatedAt": "number (timestamp)"
+  }
+  ```
+
+# UI Framework
+
+## Chakra UI v3
+- **Component Library**: Modern, accessible React component library
+- **Provider**: Custom ChakraProvider wraps the app with Chakra's default system
+- **Components Used**:
+  - Table (for user data display)
+  - Dialog (for modals)
+  - Button, Input, Field (for forms)
+  - Stack, Box, Flex (for layout)
+- **Key Feature**: Composition-based components (e.g., Field.Root, Field.Label)
 
 # External Dependencies
 
@@ -53,16 +102,45 @@ Preferred communication style: Simple, everyday language.
 - **Operations Used**:
   - `getDatabase()` - Initialize database connection
   - `ref()` - Create database references
-  - `onValue()` - Subscribe to real-time updates
+  - `get()` - Read data once
   - `push()` - Generate unique IDs for new entries
-  - `set()` - Write data to database
-- **Purpose**: Real-time bidirectional data synchronization for messaging functionality
+  - `set()` - Write complete data
+  - `update()` - Update specific fields
+  - `remove()` - Delete data
+- **Purpose**: Persistent storage for user data
+
+## OpenWeatherMap API
+- **Service**: Weather and location data API
+- **API Key**: Hardcoded in weatherService.js (7afa46f2e91768e7eeeb9001ce40de19)
+- **Endpoint**: `https://api.openweathermap.org/data/2.5/weather`
+- **Purpose**: Fetches latitude, longitude, and timezone based on zip code
+- **Data Retrieved**:
+  - `coord.lat` - Latitude
+  - `coord.lon` - Longitude
+  - `timezone` - Timezone offset in seconds from UTC
+- **Usage**: Automatically called when adding or updating users (if zip code changes)
+
+## React Query (@tanstack/react-query)
+- **Version**: Latest
+- **Configuration**: Custom QueryProvider with optimized defaults
+  - `refetchOnWindowFocus: false`
+  - `retry: 1`
+  - `staleTime: 5 minutes`
+- **Purpose**: Server state management, caching, and automatic refetching
+- **Query Keys**:
+  - `['users']` - User list data
+
+## Axios
+- **Version**: Latest
+- **Purpose**: HTTP client for OpenWeatherMap API calls
+- **Usage**: Simplified async/await API requests with automatic JSON parsing
 
 ## Build & Development Tools
 - **Vite**: Frontend build tool and dev server
 - **@vitejs/plugin-react**: React support for Vite (JSX transformation, Fast Refresh)
 - **TypeScript**: Type checking support (optional, can rename .jsx to .tsx files)
-- **React & React-DOM**: UI library and DOM renderer
+- **React & React-DOM**: UI library (v18.2.0) and DOM renderer
+- **@emotion/react**: CSS-in-JS library required by Chakra UI v3
 
 ## Hosting Platform
 - **Platform**: Replit
