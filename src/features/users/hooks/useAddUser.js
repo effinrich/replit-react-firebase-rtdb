@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userService } from '../services/userService';
 import { weatherService } from '../services/weatherService';
+import { toaster } from '../../../components/ui/toaster';
 
 export function useAddUser() {
   const queryClient = useQueryClient();
@@ -21,6 +22,16 @@ export function useAddUser() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      toaster.success({
+        title: 'User added successfully',
+        description: 'The new user has been added to the database.',
+      });
+    },
+    onError: (error) => {
+      toaster.error({
+        title: 'Failed to add user',
+        description: error.message,
+      });
     },
   });
 }

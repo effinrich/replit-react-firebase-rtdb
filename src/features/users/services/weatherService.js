@@ -25,7 +25,17 @@ export const weatherService = {
         timezone: timezone
       };
     } catch (error) {
-      throw new Error(`Failed to fetch location data: ${error.message}`);
+      if (error.response?.status === 404) {
+        throw new Error(`Invalid zip code: ${zipCode}. Please enter a valid US zip code.`);
+      } else if (error.response?.status === 401) {
+        throw new Error('Invalid API key. Please check your OpenWeatherMap API configuration.');
+      } else if (error.response) {
+        throw new Error(`Failed to fetch location data: ${error.response.data.message || error.message}`);
+      } else if (error.request) {
+        throw new Error('Network error: Unable to reach weather service. Please check your internet connection.');
+      } else {
+        throw new Error(`Failed to fetch location data: ${error.message}`);
+      }
     }
   }
 };

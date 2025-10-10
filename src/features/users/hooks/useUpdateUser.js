@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userService } from '../services/userService';
 import { weatherService } from '../services/weatherService';
+import { toaster } from '../../../components/ui/toaster';
 
 export function useUpdateUser() {
   const queryClient = useQueryClient();
@@ -27,6 +28,16 @@ export function useUpdateUser() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      toaster.success({
+        title: 'User updated successfully',
+        description: 'The user information has been updated.',
+      });
+    },
+    onError: (error) => {
+      toaster.error({
+        title: 'Failed to update user',
+        description: error.message,
+      });
     },
   });
 }
