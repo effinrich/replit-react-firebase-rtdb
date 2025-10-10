@@ -14,7 +14,7 @@ import {
   DialogBackdrop,
   DialogPositioner,
   Field,
-  Portal
+  Portal,
 } from "@chakra-ui/react";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 

@@ -46,53 +46,62 @@ export function AddUserModal({ isOpen, onClose }) {
       placement={"top"}
       motionPreset="slide-in-bottom"
     >
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add New User</DialogTitle>
-          <DialogCloseTrigger />
-        </DialogHeader>
+      <Portal>
+        <DialogBackdrop />
+        <DialogPositioner>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Add New User</DialogTitle>
+              <DialogCloseTrigger />
+            </DialogHeader>
 
-        <form onSubmit={handleSubmit}>
-          <DialogBody>
-            <Stack gap={4}>
-              <Field.Root required>
-                <Field.Label>Name</Field.Label>
-                <Input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter name"
-                  required
-                />
-              </Field.Root>
+            <form onSubmit={handleSubmit}>
+              <DialogBody>
+                <Stack gap={4}>
+                  <Field.Root required>
+                    <Field.Label>Name</Field.Label>
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter name"
+                      required
+                    />
+                  </Field.Root>
 
-              <Field.Root required>
-                <Field.Label>Zip Code</Field.Label>
-                <Input
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
-                  placeholder="Enter zip code"
-                  required
-                />
-              </Field.Root>
+                  <Field.Root required>
+                    <Field.Label>Zip Code</Field.Label>
+                    <Input
+                      value={zipCode}
+                      onChange={(e) => setZipCode(e.target.value)}
+                      placeholder="Enter zip code"
+                      required
+                    />
+                  </Field.Root>
 
-              {error && (
-                <Text color="red.500" fontSize="sm">
-                  {error.message}
-                </Text>
-              )}
-            </Stack>
-          </DialogBody>
+                  {error && (
+                    <Text color="red.500" fontSize="sm">
+                      {error.message}
+                    </Text>
+                  )}
+                </Stack>
+              </DialogBody>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={onClose} disabled={isPending}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isPending} colorScheme="blue">
-              {isPending ? "Adding..." : "Add User"}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={onClose}
+                  disabled={isPending}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isPending} colorScheme="blue">
+                  {isPending ? "Adding..." : "Add User"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </DialogPositioner>
+      </Portal>
     </DialogRoot>
   );
 }
