@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   Table,
   Button,
@@ -7,7 +7,8 @@ import {
   Flex,
   Spinner,
   Text,
-  IconButton
+  IconButton,
+  Input
 } from '@chakra-ui/react';
 import { useUsers } from '../hooks/useUsers';
 import { useDeleteUser } from '../hooks/useDeleteUser';
@@ -21,6 +22,7 @@ export function UserTable() {
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleEdit = (user) => {
     setSelectedUser(user);
@@ -32,6 +34,20 @@ export function UserTable() {
       deleteUser(userId);
     }
   };
+
+  const filteredUsers = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return users;
+    }
+    
+    const query = searchQuery.toLowerCase().trim();
+    return users.filter(user => {
+      const name = (user.name || '').toLowerCase();
+      const zipCode = String(user.zipCode || '').toLowerCase();
+      
+      return name.includes(query) || zipCode.includes(query);
+    });
+  }, [users, searchQuery]);
 
   if (isLoading) {
     return (
@@ -58,6 +74,18 @@ export function UserTable() {
         </Button>
       </Flex>
 
+      {users.length > 0 && (
+        <Box mb={6}>
+          <Input 
+            placeholder="Search by name or zip code..." 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            size="lg"
+            maxW="400px"
+          />
+        </Box>
+      )}
+
       {users.length === 0 ? (
         <Box 
           p={8} 
@@ -68,6 +96,17 @@ export function UserTable() {
         >
           <Text fontSize="lg" color="gray.500">
             No users yet. Click "Add User" to create your first user.
+          </Text>
+        </Box>
+      ) : filteredUsers.length === 0 ? (
+        <Box 
+          p={8} 
+          textAlign="center" 
+          borderWidth="1px" 
+          borderRadius="lg"
+        >
+          <Text fontSize="lg" color="gray.500">
+            No users found matching "{searchQuery}"
           </Text>
         </Box>
       ) : (
@@ -83,7 +122,7 @@ export function UserTable() {
             </Table.Row>
           </Table.Header>
           <Table.Body>
-            {users.map((user) => (
+            {filteredUsers.map((user) => (
               <Table.Row key={user.id}>
                 <Table.Cell fontWeight="medium">{user.name}</Table.Cell>
                 <Table.Cell>{user.zipCode}</Table.Cell>
