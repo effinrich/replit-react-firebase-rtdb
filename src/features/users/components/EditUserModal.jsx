@@ -12,6 +12,9 @@ import {
   DialogTitle,
   DialogCloseTrigger,
   Field,
+  Portal,
+  DialogBackdrop,
+  DialogPositioner,
 } from "@chakra-ui/react";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 
@@ -48,57 +51,69 @@ export function EditUserModal({ isOpen, onClose, user }) {
   if (!user) return null;
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onClose}
+    <DialogRoot
+      open={isOpen}
+      onOpenChange={onClose}
       size="md"
-      placement={'top'}
-      motionPreset="slide-in-bottom">
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit User</DialogTitle>
-          <DialogCloseTrigger />
-        </DialogHeader>
+      placement={"top"}
+      motionPreset="slide-in-bottom"
+    >
+      <Portal>
+        <DialogBackdrop />
+        <DialogPositioner>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Edit User</DialogTitle>
+              <DialogCloseTrigger />
+            </DialogHeader>
 
-        <form onSubmit={handleSubmit}>
-          <DialogBody>
-            <Stack gap={4}>
-              <Field.Root required>
-                <Field.Label>Name</Field.Label>
-                <Input
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Enter name"
-                  required
-                />
-              </Field.Root>
+            <form onSubmit={handleSubmit}>
+              <DialogBody>
+                <Stack gap={4}>
+                  <Field.Root required>
+                    <Field.Label>Name</Field.Label>
+                    <Input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Enter name"
+                      required
+                    />
+                  </Field.Root>
 
-              <Field.Root required>
-                <Field.Label>Zip Code</Field.Label>
-                <Input
-                  value={zipCode}
-                  onChange={(e) => setZipCode(e.target.value)}
-                  placeholder="Enter zip code"
-                  required
-                />
-              </Field.Root>
+                  <Field.Root required>
+                    <Field.Label>Zip Code</Field.Label>
+                    <Input
+                      value={zipCode}
+                      onChange={(e) => setZipCode(e.target.value)}
+                      placeholder="Enter zip code"
+                      required
+                    />
+                  </Field.Root>
 
-              {error && (
-                <Text color="red.500" fontSize="sm">
-                  {error.message}
-                </Text>
-              )}
-            </Stack>
-          </DialogBody>
+                  {error && (
+                    <Text color="red.500" fontSize="sm">
+                      {error.message}
+                    </Text>
+                  )}
+                </Stack>
+              </DialogBody>
 
-          <DialogFooter>
-            <Button variant="outline" onClick={onClose} disabled={isPending}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isPending} colorScheme="blue">
-              {isPending ? "Updating..." : "Update User"}
-            </Button>
-          </DialogFooter>
-        </form>
-      </DialogContent>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={onClose}
+                  disabled={isPending}
+                >
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isPending} colorScheme="blue">
+                  {isPending ? "Updating..." : "Update User"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </DialogPositioner>
+      </Portal>
     </DialogRoot>
   );
 }
