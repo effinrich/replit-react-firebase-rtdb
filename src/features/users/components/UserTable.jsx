@@ -13,6 +13,7 @@ import { useUsers } from '../hooks/useUsers';
 import { useDeleteUser } from '../hooks/useDeleteUser';
 import { AddUserModal } from './AddUserModal';
 import { EditUserModal } from './EditUserModal';
+import { formatTimezone } from '../../../utils/formatTimezone';
 
 export function UserTable() {
   const { data: users = [], isLoading, error } = useUsers();
@@ -88,7 +89,7 @@ export function UserTable() {
                 <Table.Cell>{user.zipCode}</Table.Cell>
                 <Table.Cell>{user.latitude?.toFixed(4) || 'N/A'}</Table.Cell>
                 <Table.Cell>{user.longitude?.toFixed(4) || 'N/A'}</Table.Cell>
-                <Table.Cell>{user.timezone || 'N/A'}</Table.Cell>
+                <Table.Cell>{formatTimezone(user.timezone)}</Table.Cell>
                 <Table.Cell>
                   <Flex gap={2}>
                     <Button size="sm" onClick={() => handleEdit(user)}>
