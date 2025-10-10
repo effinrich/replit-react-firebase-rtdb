@@ -48,7 +48,10 @@ export function EditUserModal({ isOpen, onClose, user }) {
   if (!user) return null;
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onClose} placement={"top"}>
+    <DialogRoot open={isOpen} onOpenChange={onClose}
+      size="md"
+      placement={'top'}
+      motionPreset="slide-in-bottom">
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Edit User</DialogTitle>

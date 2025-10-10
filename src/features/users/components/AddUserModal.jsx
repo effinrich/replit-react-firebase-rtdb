@@ -36,7 +36,10 @@ export function AddUserModal({ isOpen, onClose }) {
   };
 
   return (
-    <DialogRoot open={isOpen} onOpenChange={onClose} placement={'top'}>
+    <DialogRoot open={isOpen} onOpenChange={onClose}
+      size="md"
+      placement={'top'}
+      motionPreset="slide-in-bottom">
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add New User</DialogTitle>
