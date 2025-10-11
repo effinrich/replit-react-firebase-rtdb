@@ -11,11 +11,11 @@ const getUsers = async () => {
 
   const data = snapshot.val();
 
-  return data;
-  // return Object.entries(data).map(([id, value]) => ({
-  //   id,
-  //   ...value
-  // }));
+  // return data;
+  return Object.entries(data).map(([id, value]) => ({
+    id,
+    ...value,
+  }));
 };
 
 const addUser = async (userData) => {
