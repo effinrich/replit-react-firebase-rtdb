@@ -8,6 +8,17 @@ Preferred communication style: Simple, everyday language.
 
 # Recent Changes
 
+## October 11, 2025 - Form Validation Enhancement
+- **React Hook Form Integration**: Replaced local state management with react-hook-form
+  - Cleaner form handling with automatic field registration
+  - Built-in validation state management
+  - Form reset functionality on success
+- **Yup Validation**: Added schema-based validation for user forms
+  - Name: 2-50 characters, required, trimmed
+  - Zip Code: Exactly 5 digits, required, trimmed
+  - Real-time validation feedback on blur
+  - User-friendly error messages
+
 ## October 10, 2025 - UX Enhancements
 - **Toast Notifications**: Added Chakra UI v3 toaster system for user feedback
   - Success toasts for add/update/delete operations
@@ -153,6 +164,12 @@ src/
 - **Version**: Latest
 - **Purpose**: HTTP client for OpenWeatherMap API calls
 - **Usage**: Simplified async/await API requests with automatic JSON parsing
+
+## Form Management
+- **react-hook-form**: Modern form library for React with minimal re-renders
+- **yup**: Schema validation library for robust form validation
+- **@hookform/resolvers**: Integration layer between react-hook-form and yup
+- **Usage**: Declarative form validation with schema-based rules
 
 ## Build & Development Tools
 - **Vite**: Frontend build tool and dev server

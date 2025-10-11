@@ -1,7 +1,7 @@
 import { ref, get, set, push, remove, update } from "firebase/database";
 import { database } from "../../../firebase";
 
-export const getUsers = async () => {
+const getUsers = async () => {
   const usersRef = ref(database, "users");
   const snapshot = await get(usersRef);
 
@@ -18,7 +18,7 @@ export const getUsers = async () => {
   // }));
 };
 
-export const addUser = async (userData) => {
+const addUser = async (userData) => {
   const usersRef = ref(database, "users");
   const newUserRef = push(usersRef);
   const userId = newUserRef.key;
@@ -32,7 +32,7 @@ export const addUser = async (userData) => {
   return userId;
 };
 
-export const updateUser = async (userId, userData) => {
+const updateUser = async (userId, userData) => {
   const userRef = ref(database, `users/${userId}`);
   await update(userRef, {
     ...userData,
@@ -40,7 +40,14 @@ export const updateUser = async (userId, userData) => {
   });
 };
 
-export const deleteUser = async (userId) => {
+const deleteUser = async (userId) => {
   const userRef = ref(database, `users/${userId}`);
   await remove(userRef);
+};
+
+export const userService = {
+  getUsers,
+  addUser,
+  updateUser,
+  deleteUser,
 };
