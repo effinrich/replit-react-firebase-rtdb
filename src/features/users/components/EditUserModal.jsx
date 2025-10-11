@@ -1,4 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   Button,
   Input,
@@ -17,27 +19,36 @@ import {
   Portal,
 } from "@chakra-ui/react";
 import { useUpdateUser } from "../hooks/useUpdateUser";
+import { userSchema } from "../schemas/userSchema";
 
 export function EditUserModal({ isOpen, onClose, user }) {
-  const [name, setName] = useState("");
-  const [zipCode, setZipCode] = useState("");
   const { mutate: updateUser, isPending, error } = useUpdateUser();
+  
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    resolver: yupResolver(userSchema),
+    mode: "onBlur",
+  });
 
   useEffect(() => {
     if (user) {
-      setName(user.name || "");
-      setZipCode(user.zipCode || "");
+      reset({
+        name: user.name || "",
+        zipCode: user.zipCode || "",
+      });
     }
-  }, [user]);
+  }, [user, reset]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const onSubmit = (data) => {
     updateUser(
       {
         id: user.id,
-        name,
-        zipCode,
+        name: data.name,
+        zipCode: data.zipCode,
         oldZipCode: user.zipCode,
       },
       {
@@ -67,27 +78,29 @@ export function EditUserModal({ isOpen, onClose, user }) {
               <DialogCloseTrigger />
             </DialogHeader>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <DialogBody>
                 <Stack gap={4}>
-                  <Field.Root required>
+                  <Field.Root invalid={!!errors.name}>
                     <Field.Label>Name</Field.Label>
                     <Input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
+                      {...register("name")}
                       placeholder="Enter name"
-                      required
                     />
+                    {errors.name && (
+                      <Field.ErrorText>{errors.name.message}</Field.ErrorText>
+                    )}
                   </Field.Root>
 
-                  <Field.Root required>
+                  <Field.Root invalid={!!errors.zipCode}>
                     <Field.Label>Zip Code</Field.Label>
                     <Input
-                      value={zipCode}
-                      onChange={(e) => setZipCode(e.target.value)}
-                      placeholder="Enter zip code"
-                      required
+                      {...register("zipCode")}
+                      placeholder="Enter 5-digit zip code"
                     />
+                    {errors.zipCode && (
+                      <Field.ErrorText>{errors.zipCode.message}</Field.ErrorText>
+                    )}
                   </Field.Root>
 
                   {error && (
