@@ -1,9 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-import { userService } from '../services/userService';
+import { useQuery } from "@tanstack/react-query";
+import { ref, set, update, remove, onValue } from "firebase/database";
+
+import { getUsers } from "../services/userService";
 
 export function useUsers() {
   return useQuery({
-    queryKey: ['users'],
-    queryFn: userService.getUsers,
+    queryKey: ["users"],
+    queryFn: getUsers,
   });
 }

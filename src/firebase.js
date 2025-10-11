@@ -1,17 +1,33 @@
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+
+const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
+const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+const appId = import.meta.env.VITE_FIREBASE_APP_ID;
+const databaseURL = import.meta.env.VITE_FIREBASE_DATABASE_URL;
+
+if (!projectId || !apiKey || !appId || !databaseURL) {
+  console.error('Missing Firebase configuration:', {
+    hasProjectId: !!projectId,
+    hasApiKey: !!apiKey,
+    hasAppId: !!appId,
+    hasDatabaseURL: !!databaseURL
+  });
+  throw new Error('Firebase configuration is incomplete. Please check your environment variables.');
+}
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  apiKey,
+  authDomain: `${projectId}.firebaseapp.com`,
+  databaseURL,
+  projectId,
+  storageBucket: `${projectId}.firebasestorage.app`,
+  appId
 };
 
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
+const auth = getAuth(app);
 
-export { database };
+export { database, auth };

@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import { ChakraProvider } from './providers/ChakraProvider'
 import { QueryProvider } from './providers/QueryProvider'
+import { AuthProvider } from './providers/AuthProvider'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ChakraProvider>
       <QueryProvider>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </QueryProvider>
     </ChakraProvider>
   </React.StrictMode>

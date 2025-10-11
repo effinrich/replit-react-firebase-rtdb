@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo } from "react";
 import {
   Table,
   Button,
@@ -8,21 +8,25 @@ import {
   Spinner,
   Text,
   IconButton,
-  Input
-} from '@chakra-ui/react';
-import { useUsers } from '../hooks/useUsers';
-import { useDeleteUser } from '../hooks/useDeleteUser';
-import { AddUserModal } from './AddUserModal';
-import { EditUserModal } from './EditUserModal';
-import { formatTimezone } from '../../../utils/formatTimezone';
+  Input,
+  Avatar,
+  HStack,
+} from "@chakra-ui/react";
+import { useUsers } from "../hooks/useUsers";
+import { useDeleteUser } from "../hooks/useDeleteUser";
+import { AddUserModal } from "./AddUserModal";
+import { EditUserModal } from "./EditUserModal";
+import { formatTimezone } from "../../../utils/formatTimezone";
+import { useAuth } from "../../../providers/AuthProvider";
 
 export function UserTable() {
   const { data: users = [], isLoading, error } = useUsers();
   const { mutate: deleteUser } = useDeleteUser();
+  const { user: authUser, signOut } = useAuth();
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleEdit = (user) => {
     setSelectedUser(user);
@@ -30,7 +34,7 @@ export function UserTable() {
   };
 
   const handleDelete = (userId) => {
-    if (confirm('Are you sure you want to delete this user?')) {
+    if (confirm("Are you sure you want to delete this user?")) {
       deleteUser(userId);
     }
   };
@@ -39,12 +43,12 @@ export function UserTable() {
     if (!searchQuery.trim()) {
       return users;
     }
-    
+
     const query = searchQuery.toLowerCase().trim();
-    return users.filter(user => {
-      const name = (user.name || '').toLowerCase();
-      const zipCode = String(user.zipCode || '').toLowerCase();
-      
+    return users.filter((user) => {
+      const name = (user.name || "").toLowerCase();
+      const zipCode = String(user.zipCode || "").toLowerCase();
+
       return name.includes(query) || zipCode.includes(query);
     });
   }, [users, searchQuery]);
@@ -66,18 +70,45 @@ export function UserTable() {
   }
 
   return (
-    <Box p={8}>
-      <Flex justify="space-between" align="center" mb={6}>
-        <Heading size="2xl">User Dashboard</Heading>
-        <Button colorScheme="blue" onClick={() => setIsAddModalOpen(true)}>
-          Add User
-        </Button>
-      </Flex>
+    <Box>
+      <Box bg="white" borderBottom="1px" borderColor="gray.200" px={8} py={4}>
+        <Flex justify="space-between" align="center">
+          <Heading size="xl">User Dashboard</Heading>
+          <HStack gap={4}>
+            <Flex align="center" gap={3}>
+              <Avatar 
+                size="sm" 
+                name={authUser?.displayName || authUser?.email} 
+                src={authUser?.photoURL}
+              />
+              <Box>
+                <Text fontWeight="medium" fontSize="sm">
+                  {authUser?.displayName || 'User'}
+                </Text>
+                <Text fontSize="xs" color="gray.600">
+                  {authUser?.email}
+                </Text>
+              </Box>
+            </Flex>
+            <Button size="sm" variant="outline" onClick={signOut}>
+              Sign Out
+            </Button>
+          </HStack>
+        </Flex>
+      </Box>
+
+      <Box p={8}>
+        <Flex justify="space-between" align="center" mb={6}>
+          <Heading size="lg">Users</Heading>
+          <Button colorScheme="blue" onClick={() => setIsAddModalOpen(true)}>
+            Add User
+          </Button>
+        </Flex>
 
       {users.length > 0 && (
         <Box mb={6}>
-          <Input 
-            placeholder="Search by name or zip code..." 
+          <Input
+            placeholder="Search by name or zip code..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             size="lg"
@@ -87,11 +118,11 @@ export function UserTable() {
       )}
 
       {users.length === 0 ? (
-        <Box 
-          p={8} 
-          textAlign="center" 
-          borderWidth="1px" 
-          borderRadius="lg" 
+        <Box
+          p={8}
+          textAlign="center"
+          borderWidth="1px"
+          borderRadius="lg"
           borderStyle="dashed"
         >
           <Text fontSize="lg" color="gray.500">
@@ -99,12 +130,7 @@ export function UserTable() {
           </Text>
         </Box>
       ) : filteredUsers.length === 0 ? (
-        <Box 
-          p={8} 
-          textAlign="center" 
-          borderWidth="1px" 
-          borderRadius="lg"
-        >
+        <Box p={8} textAlign="center" borderWidth="1px" borderRadius="lg">
           <Text fontSize="lg" color="gray.500">
             No users found matching "{searchQuery}"
           </Text>
@@ -126,17 +152,17 @@ export function UserTable() {
               <Table.Row key={user.id}>
                 <Table.Cell fontWeight="medium">{user.name}</Table.Cell>
                 <Table.Cell>{user.zipCode}</Table.Cell>
-                <Table.Cell>{user.latitude?.toFixed(4) || 'N/A'}</Table.Cell>
-                <Table.Cell>{user.longitude?.toFixed(4) || 'N/A'}</Table.Cell>
+                <Table.Cell>{user.latitude?.toFixed(4) || "N/A"}</Table.Cell>
+                <Table.Cell>{user.longitude?.toFixed(4) || "N/A"}</Table.Cell>
                 <Table.Cell>{formatTimezone(user.timezone)}</Table.Cell>
                 <Table.Cell>
                   <Flex gap={2}>
                     <Button size="sm" onClick={() => handleEdit(user)}>
                       Edit
                     </Button>
-                    <Button 
-                      size="sm" 
-                      colorScheme="red" 
+                    <Button
+                      size="sm"
+                      colorScheme="red"
                       variant="outline"
                       onClick={() => handleDelete(user.id)}
                     >
@@ -150,16 +176,17 @@ export function UserTable() {
         </Table.Root>
       )}
 
-      <AddUserModal 
-        isOpen={isAddModalOpen} 
-        onClose={() => setIsAddModalOpen(false)} 
+      <AddUserModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
       />
-      
-      <EditUserModal 
-        isOpen={isEditModalOpen} 
+
+      <EditUserModal
+        isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         user={selectedUser}
       />
+      </Box>
     </Box>
   );
 }
