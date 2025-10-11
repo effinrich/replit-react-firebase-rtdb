@@ -24,7 +24,7 @@ export function useUpdateUser() {
         }),
       };
 
-      return await updateUser(id, userData);
+      return updateUser(id, userData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
