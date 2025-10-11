@@ -21,7 +21,7 @@ import { useUpdateUser } from "../hooks/useUpdateUser";
 export function EditUserModal({ isOpen, onClose, user }) {
   const [name, setName] = useState("");
   const [zipCode, setZipCode] = useState("");
-  const { mutate: updateUser, isPending, error } = useUpdateUser();
+  const { mutate: handleUpdate, isPending, error } = useUpdateUser();
 
   useEffect(() => {
     if (user) {
@@ -33,7 +33,7 @@ export function EditUserModal({ isOpen, onClose, user }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    updateUser(
+    handleUpdate(
       {
         id: user.id,
         name,
