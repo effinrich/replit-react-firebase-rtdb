@@ -20,7 +20,7 @@ export const getUsers = async () => {
   // }));
 };
 
-export const handleCreate = async (formData) => {
+export const createUser = async (formData) => {
   const weatherData = await getLocationData(formData.zipCode);
 
   const userData = {

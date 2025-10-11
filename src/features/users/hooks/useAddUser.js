@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { handleCreate } from "../services/userService";
+import { createUser } from "../services/userService";
 import { getLocationData } from "../services/weatherService";
 import { toaster } from "../../../components/ui/toaster";
 
@@ -18,7 +18,7 @@ export function useAddUser() {
         timezone: locationData.timezone,
       };
 
-      return await handleCreate(userData);
+      return await createUser(userData);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
