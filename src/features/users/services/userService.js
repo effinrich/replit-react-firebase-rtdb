@@ -1,17 +1,15 @@
-import { useState, useEffect } from "react";
-import { ref, set, update, remove, onValue } from "firebase/database";
-
-import { getLocationData } from "./weatherService";
-
+import { ref, get, set, push, remove, update } from "firebase/database";
 import { database } from "../../../firebase";
 
 export const getUsers = async () => {
-  useEffect(() => {
-    const usersRef = ref(database, "users");
-    onValue(usersRef, (snapshot) => {
-      ref(snapshot.val() || {});
-    });
-  }, []);
+  const usersRef = ref(database, "users");
+  const snapshot = await get(usersRef);
+
+  if (!snapshot.exists()) {
+    return [];
+  }
+
+  const data = snapshot.val();
 
   return data;
   // return Object.entries(data).map(([id, value]) => ({
@@ -20,51 +18,29 @@ export const getUsers = async () => {
   // }));
 };
 
-export const createUser = async (formData) => {
-  const weatherData = await getLocationData(formData.zipCode);
+export const addUser = async (userData) => {
+  const usersRef = ref(database, "users");
+  const newUserRef = push(usersRef);
+  const userId = newUserRef.key;
 
-  const userData = {
-    ...formData,
-    latitude: weatherData.coord.lat,
-    longitude: weatherData.coord.lon,
-    timezone: weatherData.timezone,
-  };
+  await set(newUserRef, {
+    ...userData,
+    id: userId,
+    createdAt: Date.now(),
+  });
 
-  set(ref(database, "users", userData));
+  return userId;
 };
 
-// export const addUser = async (userData) => {
-//   const [name, setName] = useState("");
-//   const usersRef = ref(database, "users");
-//   const newUserRef = push(usersRef);
-//   const userId = newUserRef.key;
-
-//   await set(newUserRef, {
-//     ...userData,
-//     id: userId,
-//     createdAt: Date.now(),
-//   });
-
-//   return userId;
-// };
-
-export const updateUser = (userId, userData) => {
-  update(ref(database, `users/${id}`), { userId, userData });
+export const updateUser = async (userId, userData) => {
+  const userRef = ref(database, `users/${userId}`);
+  await update(userRef, {
+    ...userData,
+    updatedAt: Date.now(),
+  });
 };
 
-// export const updateUser = async (userId, userData) => {
-//   const userRef = ref(database, `users/${userId}`);
-//   await update(userRef, {
-//     ...userData,
-//     updatedAt: Date.now(),
-//   });
-// };
-
-// export const deleteUser = async (userId) => {
-//   const userRef = ref(database, `users/${userId}`);
-//   await remove(userRef);
-// };
-
-export const deleteUser = (id) => {
-  remove(ref(database, `users/${id}`));
+export const deleteUser = async (userId) => {
+  const userRef = ref(database, `users/${userId}`);
+  await remove(userRef);
 };

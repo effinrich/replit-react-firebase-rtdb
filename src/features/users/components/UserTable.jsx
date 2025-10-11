@@ -7,6 +7,7 @@ import {
   Flex,
   Spinner,
   Text,
+  IconButton,
   Input,
   Avatar,
   HStack,
@@ -75,14 +76,14 @@ export function UserTable() {
           <Heading size="xl">User Dashboard</Heading>
           <HStack gap={4}>
             <Flex align="center" gap={3}>
-              <Avatar
-                size="sm"
-                name={authUser?.displayName || authUser?.email}
+              <Avatar 
+                size="sm" 
+                name={authUser?.displayName || authUser?.email} 
                 src={authUser?.photoURL}
               />
               <Box>
                 <Text fontWeight="medium" fontSize="sm">
-                  {authUser?.displayName || "User"}
+                  {authUser?.displayName || 'User'}
                 </Text>
                 <Text fontSize="xs" color="gray.600">
                   {authUser?.email}
@@ -104,87 +105,87 @@ export function UserTable() {
           </Button>
         </Flex>
 
-        {users.length > 0 && (
-          <Box mb={6}>
-            <Input
-              placeholder="Search by name or zip code..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              size="lg"
-              maxW="400px"
-            />
-          </Box>
-        )}
+      {users.length > 0 && (
+        <Box mb={6}>
+          <Input
+            placeholder="Search by name or zip code..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            size="lg"
+            maxW="400px"
+          />
+        </Box>
+      )}
 
-        {users.length === 0 ? (
-          <Box
-            p={8}
-            textAlign="center"
-            borderWidth="1px"
-            borderRadius="lg"
-            borderStyle="dashed"
-          >
-            <Text fontSize="lg" color="gray.500">
-              No users yet. Click "Add User" to create your first user.
-            </Text>
-          </Box>
-        ) : filteredUsers.length === 0 ? (
-          <Box p={8} textAlign="center" borderWidth="1px" borderRadius="lg">
-            <Text fontSize="lg" color="gray.500">
-              No users found matching "{searchQuery}"
-            </Text>
-          </Box>
-        ) : (
-          <Table.Root variant="outline" size="lg">
-            <Table.Header>
-              <Table.Row>
-                <Table.ColumnHeader>Name</Table.ColumnHeader>
-                <Table.ColumnHeader>Zip Code</Table.ColumnHeader>
-                <Table.ColumnHeader>Latitude</Table.ColumnHeader>
-                <Table.ColumnHeader>Longitude</Table.ColumnHeader>
-                <Table.ColumnHeader>Timezone</Table.ColumnHeader>
-                <Table.ColumnHeader>Actions</Table.ColumnHeader>
+      {users.length === 0 ? (
+        <Box
+          p={8}
+          textAlign="center"
+          borderWidth="1px"
+          borderRadius="lg"
+          borderStyle="dashed"
+        >
+          <Text fontSize="lg" color="gray.500">
+            No users yet. Click "Add User" to create your first user.
+          </Text>
+        </Box>
+      ) : filteredUsers.length === 0 ? (
+        <Box p={8} textAlign="center" borderWidth="1px" borderRadius="lg">
+          <Text fontSize="lg" color="gray.500">
+            No users found matching "{searchQuery}"
+          </Text>
+        </Box>
+      ) : (
+        <Table.Root variant="outline" size="lg">
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Zip Code</Table.ColumnHeader>
+              <Table.ColumnHeader>Latitude</Table.ColumnHeader>
+              <Table.ColumnHeader>Longitude</Table.ColumnHeader>
+              <Table.ColumnHeader>Timezone</Table.ColumnHeader>
+              <Table.ColumnHeader>Actions</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {filteredUsers.map((user) => (
+              <Table.Row key={user.id}>
+                <Table.Cell fontWeight="medium">{user.name}</Table.Cell>
+                <Table.Cell>{user.zipCode}</Table.Cell>
+                <Table.Cell>{user.latitude?.toFixed(4) || "N/A"}</Table.Cell>
+                <Table.Cell>{user.longitude?.toFixed(4) || "N/A"}</Table.Cell>
+                <Table.Cell>{formatTimezone(user.timezone)}</Table.Cell>
+                <Table.Cell>
+                  <Flex gap={2}>
+                    <Button size="sm" onClick={() => handleEdit(user)}>
+                      Edit
+                    </Button>
+                    <Button
+                      size="sm"
+                      colorScheme="red"
+                      variant="outline"
+                      onClick={() => handleDelete(user.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Flex>
+                </Table.Cell>
               </Table.Row>
-            </Table.Header>
-            <Table.Body>
-              {filteredUsers.map((user) => (
-                <Table.Row key={user.id}>
-                  <Table.Cell fontWeight="medium">{user.name}</Table.Cell>
-                  <Table.Cell>{user.zipCode}</Table.Cell>
-                  <Table.Cell>{user.latitude?.toFixed(4) || "N/A"}</Table.Cell>
-                  <Table.Cell>{user.longitude?.toFixed(4) || "N/A"}</Table.Cell>
-                  <Table.Cell>{formatTimezone(user.timezone)}</Table.Cell>
-                  <Table.Cell>
-                    <Flex gap={2}>
-                      <Button size="sm" onClick={() => handleEdit(user)}>
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        colorScheme="red"
-                        variant="outline"
-                        onClick={() => handleDelete(user.id)}
-                      >
-                        Delete
-                      </Button>
-                    </Flex>
-                  </Table.Cell>
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table.Root>
-        )}
+            ))}
+          </Table.Body>
+        </Table.Root>
+      )}
 
-        <AddUserModal
-          isOpen={isAddModalOpen}
-          onClose={() => setIsAddModalOpen(false)}
-        />
+      <AddUserModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+      />
 
-        <EditUserModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          user={selectedUser}
-        />
+      <EditUserModal
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        user={selectedUser}
+      />
       </Box>
     </Box>
   );
