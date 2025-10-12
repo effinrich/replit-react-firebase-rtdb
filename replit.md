@@ -8,6 +8,19 @@ Preferred communication style: Simple, everyday language.
 
 # Recent Changes
 
+## October 12, 2025 - Firebase Authentication
+- **Frontend-Only Authentication**: Implemented Firebase Authentication for user access control
+  - Google sign-in with popup authentication
+  - No backend server required - pure frontend implementation
+  - Auth state management with onAuthStateChanged listener
+- **Protected Dashboard**: User dashboard now requires authentication
+  - Login page displayed for unauthenticated users
+  - User profile displayed in dashboard header (avatar, name, email)
+  - Sign-out button for authenticated users
+- **AuthProvider Context**: Centralized authentication state management
+  - Loading state handling during authentication check
+  - Automatic session persistence across page refreshes
+
 ## October 11, 2025 - Form Validation Enhancement
 - **React Hook Form Integration**: Replaced local state management with react-hook-form
   - Cleaner form handling with automatic field registration
@@ -118,9 +131,9 @@ src/
 # External Dependencies
 
 ## Firebase Integration
-- **Service**: Firebase Realtime Database
+- **Service**: Firebase Realtime Database + Firebase Authentication
 - **SDK Version**: firebase@12.4.0
-- **Configuration File**: `src/firebase.js` - initializes Firebase app and database connection
+- **Configuration File**: `src/firebase.js` - initializes Firebase app, database, and authentication
 - **Environment Variables**: Configured via Vite's import.meta.env (prefix: VITE_)
   - VITE_FIREBASE_API_KEY - Firebase API key
   - VITE_FIREBASE_AUTH_DOMAIN - Authentication domain
@@ -129,6 +142,8 @@ src/
   - VITE_FIREBASE_STORAGE_BUCKET - Storage bucket name
   - VITE_FIREBASE_MESSAGING_SENDER_ID - Cloud messaging sender ID
   - VITE_FIREBASE_APP_ID - App identifier
+
+### Firebase Realtime Database
 - **Operations Used**:
   - `getDatabase()` - Initialize database connection
   - `ref()` - Create database references
@@ -138,6 +153,25 @@ src/
   - `update()` - Update specific fields
   - `remove()` - Delete data
 - **Purpose**: Persistent storage for user data
+
+### Firebase Authentication
+- **Service**: `src/services/authService.js` - authentication service layer
+- **Provider**: Google Authentication with popup sign-in
+- **Operations Used**:
+  - `getAuth()` - Initialize Firebase Auth
+  - `signInWithPopup()` - Google OAuth popup sign-in
+  - `signOut()` - Sign out current user
+  - `onAuthStateChanged()` - Listen for auth state changes
+  - `GoogleAuthProvider()` - Google authentication provider
+- **State Management**: 
+  - `src/providers/AuthProvider.jsx` - React Context for auth state
+  - Automatic session persistence across page refreshes
+  - Loading state management during authentication checks
+- **UI Components**:
+  - `src/components/Login.jsx` - Login page with Google sign-in button
+  - Protected routes in `src/App.jsx` - Conditional rendering based on auth state
+  - User profile display in UserTable header with sign-out button
+- **Architecture**: Frontend-only authentication (no backend server required)
 
 ## OpenWeatherMap API
 - **Service**: Weather and location data API
