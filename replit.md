@@ -172,11 +172,17 @@ src/
 - **Usage**: Declarative form validation with schema-based rules
 
 ## Build & Development Tools
-- **Vite**: Frontend build tool and dev server
+- **Vite**: Frontend build tool and dev server (v5.0.0)
 - **@vitejs/plugin-react**: React support for Vite (JSX transformation, Fast Refresh)
 - **TypeScript**: Type checking support (optional, can rename .jsx to .tsx files)
-- **React & React-DOM**: UI library (v18.2.0) and DOM renderer
+- **React & React-DOM**: UI library (v18.3.1) and DOM renderer - in dependencies for production compatibility
 - **@emotion/react**: CSS-in-JS library required by Chakra UI v3
+
+## Deployment Configuration
+- **Platform**: Replit Static Deployment
+- **Build Command**: `npm run build`
+- **Output Directory**: `dist`
+- **Deployment Type**: Static site (no server required)
 
 ## Hosting Platform
 - **Platform**: Replit
