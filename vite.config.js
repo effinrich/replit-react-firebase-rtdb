@@ -9,5 +9,14 @@ export default defineConfig({
     port: 5000,
     strictPort: true,
     allowedHosts: true
+  },
+  build: {
+    commonjsOptions: {
+      include: [/node_modules/],
+      transformMixedEsModules: true
+    }
+  },
+  optimizeDeps: {
+    include: ['@chakra-ui/react', 'firebase', 'react', 'react-dom']
   }
 })
