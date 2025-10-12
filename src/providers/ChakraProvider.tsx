@@ -1,6 +1,11 @@
 import { ChakraProvider as BaseChakraProvider, defaultSystem } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
-export function ChakraProvider({ children }) {
+interface ChakraProviderProps {
+  children: ReactNode;
+}
+
+export function ChakraProvider({ children }: ChakraProviderProps) {
   return (
     <BaseChakraProvider value={defaultSystem}>
       {children}

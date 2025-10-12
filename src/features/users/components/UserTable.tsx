@@ -8,8 +8,8 @@ import {
   Spinner,
   Text,
   Input,
-  Avatar,
   HStack,
+  Avatar,
 } from "@chakra-ui/react";
 import { useUsers } from "../hooks/useUsers";
 import { useDeleteUser } from "../hooks/useDeleteUser";
@@ -17,22 +17,23 @@ import { AddUserModal } from "./AddUserModal";
 import { EditUserModal } from "./EditUserModal";
 import { formatTimezone } from "../../../utils/formatTimezone";
 import { useAuth } from "../../../providers/AuthProvider";
+import { User } from "../../../types/user";
 
 export function UserTable() {
   const { data: users = [], isLoading, error } = useUsers();
   const { mutate: deleteUser } = useDeleteUser();
   const { user: authUser, signOut } = useAuth();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const handleEdit = (user) => {
+  const handleEdit = (user: User) => {
     setSelectedUser(user);
     setIsEditModalOpen(true);
   };
 
-  const handleDelete = (userId) => {
+  const handleDelete = (userId: string) => {
     if (confirm("Are you sure you want to delete this user?")) {
       deleteUser(userId);
     }
@@ -75,11 +76,13 @@ export function UserTable() {
           <Heading size="xl">User Dashboard</Heading>
           <HStack gap={4}>
             <Flex align="center" gap={3}>
-              <Avatar
+              <Avatar.Root
                 size="sm"
-                name={authUser?.displayName || authUser?.email}
-                src={authUser?.photoURL}
-              />
+                name={authUser?.displayName || authUser?.email || undefined}
+                src={authUser?.photoURL || undefined}
+              >
+                <Avatar.Image />
+              </Avatar.Root>
               <Box>
                 <Text fontWeight="medium" fontSize="sm">
                   {authUser?.displayName || "User"}

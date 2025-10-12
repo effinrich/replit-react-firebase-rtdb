@@ -1,7 +1,8 @@
 import { ref, get, set, push, remove, update } from "firebase/database";
 import { database } from "../../../firebase";
+import { User, UserFormData } from "../../../types/user";
 
-const getUsers = async () => {
+const getUsers = async (): Promise<User[]> => {
   const usersRef = ref(database, "users");
   const snapshot = await get(usersRef);
 
@@ -14,11 +15,11 @@ const getUsers = async () => {
   // return data;
   return Object.entries(data).map(([id, value]) => ({
     id,
-    ...value,
+    ...(value as Omit<User, 'id'>),
   }));
 };
 
-const addUser = async (userData) => {
+const addUser = async (userData: UserFormData & Partial<Pick<User, 'latitude' | 'longitude' | 'timezone'>>): Promise<string> => {
   const usersRef = ref(database, "users");
   const newUserRef = push(usersRef);
   const userId = newUserRef.key;
@@ -29,10 +30,10 @@ const addUser = async (userData) => {
     createdAt: Date.now(),
   });
 
-  return userId;
+  return userId!;
 };
 
-const updateUser = async (userId, userData) => {
+const updateUser = async (userId: string, userData: Partial<User>): Promise<void> => {
   const userRef = ref(database, `users/${userId}`);
   await update(userRef, {
     ...userData,
@@ -40,7 +41,7 @@ const updateUser = async (userId, userData) => {
   });
 };
 
-const deleteUser = async (userId) => {
+const deleteUser = async (userId: string): Promise<void> => {
   const userRef = ref(database, `users/${userId}`);
   await remove(userRef);
 };

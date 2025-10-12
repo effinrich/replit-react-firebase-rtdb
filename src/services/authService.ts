@@ -1,15 +1,16 @@
-import { 
-  signInWithPopup, 
-  signOut, 
+import {
+  signInWithPopup,
+  signOut,
   GoogleAuthProvider,
-  onAuthStateChanged 
+  onAuthStateChanged,
+  User as FirebaseUser
 } from 'firebase/auth';
 import { auth } from '../firebase';
 
 const googleProvider = new GoogleAuthProvider();
 
 export const authService = {
-  signInWithGoogle: async () => {
+  signInWithGoogle: async (): Promise<FirebaseUser> => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       return result.user;
@@ -19,7 +20,7 @@ export const authService = {
     }
   },
 
-  signOut: async () => {
+  signOut: async (): Promise<void> => {
     try {
       await signOut(auth);
     } catch (error) {
@@ -28,11 +29,11 @@ export const authService = {
     }
   },
 
-  onAuthStateChanged: (callback) => {
+  onAuthStateChanged: (callback: (user: FirebaseUser | null) => void) => {
     return onAuthStateChanged(auth, callback);
   },
 
-  getCurrentUser: () => {
+  getCurrentUser: (): FirebaseUser | null => {
     return auth.currentUser;
   }
 };

@@ -2,14 +2,20 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { userService } from '../services/userService';
 import { weatherService } from '../services/weatherService';
 import { toaster } from '../../../components/ui/toaster';
+import { UserFormData } from '../../../types/user';
+
+interface UpdateUserParams extends UserFormData {
+  id: string;
+  oldZipCode: string;
+}
 
 export function useUpdateUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, name, zipCode, oldZipCode }) => {
+    mutationFn: async ({ id, name, zipCode, oldZipCode }: UpdateUserParams) => {
       let locationData = null;
-      
+
       if (zipCode !== oldZipCode) {
         locationData = await weatherService.getLocationData(zipCode);
       }
@@ -33,7 +39,7 @@ export function useUpdateUser() {
         description: 'The user information has been updated.',
       });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toaster.error({
         title: 'Failed to update user',
         description: error.message,

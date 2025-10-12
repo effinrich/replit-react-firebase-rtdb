@@ -14,7 +14,7 @@ export function useDeleteUser() {
         description: 'The user has been removed from the database.',
       });
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toaster.error({
         title: 'Failed to delete user',
         description: error.message,

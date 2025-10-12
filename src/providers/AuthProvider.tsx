@@ -1,11 +1,16 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authService } from '../services/authService';
+import { AuthContextType } from '../types/auth';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext<AuthContextType | null>(null);
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+export function AuthProvider({ children }: AuthProviderProps) {
+  const [user, setUser] = useState<AuthContextType['user']>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const unsubscribe = authService.onAuthStateChanged((user) => {

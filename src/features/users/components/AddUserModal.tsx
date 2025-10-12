@@ -19,8 +19,14 @@ import {
 } from "@chakra-ui/react";
 import { useAddUser } from "../hooks/useAddUser";
 import { userSchema } from "../schemas/userSchema";
+import { UserFormData } from "../../../types/user";
 
-export function AddUserModal({ isOpen, onClose }) {
+interface AddUserModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export function AddUserModal({ isOpen, onClose }: AddUserModalProps) {
   const { mutate: addUser, isPending, error } = useAddUser();
   
   const {
@@ -28,12 +34,12 @@ export function AddUserModal({ isOpen, onClose }) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<UserFormData>({
     resolver: yupResolver(userSchema),
     mode: "onBlur",
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: UserFormData) => {
     addUser(data, {
       onSuccess: () => {
         reset();

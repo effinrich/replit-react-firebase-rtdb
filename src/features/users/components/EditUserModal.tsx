@@ -20,8 +20,15 @@ import {
 } from "@chakra-ui/react";
 import { useUpdateUser } from "../hooks/useUpdateUser";
 import { userSchema } from "../schemas/userSchema";
+import { User, UserFormData } from "../../../types/user";
 
-export function EditUserModal({ isOpen, onClose, user }) {
+interface EditUserModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  user: User | null;
+}
+
+export function EditUserModal({ isOpen, onClose, user }: EditUserModalProps) {
   const { mutate: updateUser, isPending, error } = useUpdateUser();
   
   const {
@@ -29,7 +36,7 @@ export function EditUserModal({ isOpen, onClose, user }) {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<UserFormData>({
     resolver: yupResolver(userSchema),
     mode: "onBlur",
   });
@@ -43,7 +50,9 @@ export function EditUserModal({ isOpen, onClose, user }) {
     }
   }, [user, reset]);
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: UserFormData) => {
+    if (!user) return;
+
     updateUser(
       {
         id: user.id,
