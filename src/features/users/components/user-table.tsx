@@ -79,7 +79,7 @@ export function UserTable() {
         bg={{ base: "purple.900", _dark: "gray.900" }}
       >
         <Flex justify="space-between" align="center">
-          <Heading size="xl" color={{ base: "white", _dark: "purple.900" }}>
+          <Heading size="xl" color={{ base: "purple.900", _dark: "white" }}>
             User Dashboard
           </Heading>
           <HStack gap={4}>
