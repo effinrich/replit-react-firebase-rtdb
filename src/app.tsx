@@ -1,8 +1,9 @@
-import { UserTable } from './features/users';
-import { Toaster } from './components/ui/toaster';
-import { useAuth } from './providers/auth-provider';
-import { Login } from './components/login2';
-import { Spinner, Flex } from '@chakra-ui/react';
+import { UserTable } from "./features/users";
+import { Toaster } from "./components/ui/toaster";
+import { useAuth } from "./providers/auth-provider";
+import { Login } from "./components/login2";
+import {Footer} from "./components/ui/footer";
+import { Spinner, Flex } from "@chakra-ui/react";
 
 export default function App() {
   const { user, loading } = useAuth();
@@ -19,6 +20,7 @@ export default function App() {
     <>
       {user ? <UserTable /> : <Login />}
       <Toaster />
+      <Footer />
     </>
   );
 }

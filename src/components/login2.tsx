@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Stack, Flex } from "@chakra-ui/react";
+import { Box, Heading, Stack, Flex } from "@chakra-ui/react";
 import { BsGoogle } from "react-icons/bs";
 
 import { SocialLoginButton } from "./social-login-button";
