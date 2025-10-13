@@ -95,7 +95,10 @@ export function UserTable() {
                 <Text fontWeight="medium" fontSize="sm">
                   {authUser?.displayName || "User"}
                 </Text>
-                <Text fontSize="xs" color="gray.600">
+                <Text
+                  fontSize="xs"
+                  color={{ base: "purple.900", _dark: "gray.200" }}
+                >
                   {authUser?.email}
                 </Text>
               </Box>
@@ -110,7 +113,7 @@ export function UserTable() {
       <Box p={8}>
         <Flex justify="space-between" align="center" mb={6}>
           <Heading size="lg">Users</Heading>
-          <Button colorScheme="blue" onClick={() => setIsAddModalOpen(true)}>
+          <Button colorScheme="purple" onClick={() => setIsAddModalOpen(true)}>
             Add User
           </Button>
         </Flex>
