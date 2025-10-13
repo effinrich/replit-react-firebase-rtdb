@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Stack } from "@chakra-ui/react";
+import { Box, Container, Heading, Stack, Flex } from "@chakra-ui/react";
 import { BsGoogle } from "react-icons/bs";
 
 import { SocialLoginButton } from "./social-login-button";
@@ -18,7 +18,14 @@ export function Login() {
 
   return (
     <Flex minH="100vh" align="center" justify="center">
-      <Box height="full">
+      <Box
+        maxW="md"
+        w="full"
+        p={8}
+        borderRadius="lg"
+        boxShadow="lg"
+        textAlign="center"
+      >
         <Container maxW="md" py={{ base: "24", md: "32" }}>
           <Stack gap="8">
             <Stack gap={{ base: "2", md: "3" }}>
