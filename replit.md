@@ -9,6 +9,21 @@ Naming convention: All filenames use kebab-case (e.g., user-service.ts, add-user
 
 # Recent Changes
 
+## October 13, 2025 - Storybook Integration
+- **Storybook 9.1.10 Setup**: Integrated Storybook for component documentation and testing
+  - Configured with React-Vite framework
+  - ChakraProvider decorator wraps all stories for consistent styling
+  - Addons: @storybook/addon-a11y for accessibility testing, @storybook/addon-docs for documentation
+  - Testing utilities from 'storybook/test' package (userEvent, expect, within, fn)
+- **Component Stories Created**:
+  - login.stories.tsx - Login page with accessibility tests
+  - add-user-modal.stories.tsx - Add user form with interaction tests (form validation, submit)
+  - edit-user-modal.stories.tsx - Edit user form with interaction tests
+  - user-table.stories.tsx - User table with search interaction tests
+  - app.stories.tsx - App page with interaction and accessibility tests
+- **Accessibility (A11y) Testing**: Enabled color-contrast and label rules for all stories
+- **Storybook Workflow**: Running on port 6000 for component development and testing
+
 ## October 13, 2025 - File Naming Convention
 - **Kebab-Case Conversion**: Converted all filenames to kebab-case naming convention
   - Services: userService.ts → user-service.ts, weatherService.ts → weather-service.ts, authService.ts → auth-service.ts
@@ -96,9 +111,13 @@ src/
 
 ## Development Configuration
 - **Dev Server**: Vite dev server running on port 5000
+- **Storybook Dev Server**: Storybook running on port 6000 for component development
 - **Host Configuration**: Bound to 0.0.0.0 with strict port enforcement and allowedHosts enabled for Replit iframe compatibility
 - **Module System**: ESNext modules with ES6+ features enabled
 - **Hot Reload**: Fast refresh enabled for instant development feedback
+- **Workflows**: 
+  - Server workflow: `npm run dev` (main application on port 5000)
+  - Storybook workflow: `npm run storybook` (component explorer on port 6000)
 
 ## Data Architecture
 - **State Management**: 
@@ -195,6 +214,12 @@ src/
 - **TypeScript**: Type checking support (optional, can rename .jsx to .tsx files)
 - **React & React-DOM**: UI library (v18.3.1) and DOM renderer - in dependencies for production compatibility
 - **@emotion/react**: CSS-in-JS library required by Chakra UI v3
+- **Storybook**: Component development and testing environment (v9.1.10)
+  - **@storybook/react-vite**: Storybook framework for React + Vite
+  - **@storybook/addon-a11y**: Accessibility testing addon
+  - **@storybook/addon-docs**: Auto-generated component documentation
+  - **@chromatic-com/storybook**: Visual testing integration
+  - **Testing Utilities**: Built-in to Storybook 9.1 via 'storybook/test' import (@testing-library/user-event, @vitest/expect)
 
 ## Deployment Configuration
 - **Platform**: Replit Static Deployment
