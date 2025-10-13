@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Text, VStack, Flex } from '@chakra-ui/react';
-import { useAuth } from '../providers/AuthProvider';
+import { useAuth } from '../providers/auth-provider';
 
 export function Login() {
   const { signIn } = useAuth();

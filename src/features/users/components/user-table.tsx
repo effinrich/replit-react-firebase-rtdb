@@ -11,12 +11,12 @@ import {
   HStack,
   Avatar,
 } from "@chakra-ui/react";
-import { useUsers } from "../hooks/useUsers";
-import { useDeleteUser } from "../hooks/useDeleteUser";
-import { AddUserModal } from "./AddUserModal";
-import { EditUserModal } from "./EditUserModal";
-import { formatTimezone } from "../../../utils/formatTimezone";
-import { useAuth } from "../../../providers/AuthProvider";
+import { useUsers } from "../hooks/use-users";
+import { useDeleteUser } from "../hooks/use-delete-user";
+import { AddUserModal } from "./add-user-modal";
+import { EditUserModal } from "./edit-user-modal";
+import { formatTimezone } from "../../../utils/format-timezone";
+import { useAuth } from "../../../providers/auth-provider";
 import { User } from "../../../types/user";
 
 export function UserTable() {

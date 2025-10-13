@@ -1,7 +1,7 @@
 import { UserTable } from './features/users';
 import { Toaster } from './components/ui/toaster';
-import { useAuth } from './providers/AuthProvider';
-import { Login } from './components/Login';
+import { useAuth } from './providers/auth-provider';
+import { Login } from './components/login';
 import { Spinner, Flex } from '@chakra-ui/react';
 
 export default function App() {

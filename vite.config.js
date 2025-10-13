@@ -17,6 +17,6 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['@chakra-ui/react', 'firebase', 'react', 'react-dom']
+    include: ['@chakra-ui/react', 'react', 'react-dom']
   }
 })

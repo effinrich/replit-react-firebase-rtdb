@@ -17,8 +17,8 @@ import {
   Field,
   Portal,
 } from "@chakra-ui/react";
-import { useAddUser } from "../hooks/useAddUser";
-import { userSchema } from "../schemas/userSchema";
+import { useAddUser } from "../hooks/use-add-user";
+import { userSchema } from "../schemas/user-schema";
 import { UserFormData } from "../../../types/user";
 
 interface AddUserModalProps {

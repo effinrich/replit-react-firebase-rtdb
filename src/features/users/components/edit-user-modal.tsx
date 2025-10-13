@@ -18,8 +18,8 @@ import {
   Field,
   Portal,
 } from "@chakra-ui/react";
-import { useUpdateUser } from "../hooks/useUpdateUser";
-import { userSchema } from "../schemas/userSchema";
+import { useUpdateUser } from "../hooks/use-update-user";
+import { userSchema } from "../schemas/user-schema";
 import { User, UserFormData } from "../../../types/user";
 
 interface EditUserModalProps {

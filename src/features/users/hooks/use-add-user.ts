@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { userService } from '../services/userService';
-import { weatherService } from '../services/weatherService';
+import { userService } from '../services/user-service';
+import { weatherService } from '../services/weather-service';
 import { toaster } from '../../../components/ui/toaster';
 import { UserFormData } from '../../../types/user';
 

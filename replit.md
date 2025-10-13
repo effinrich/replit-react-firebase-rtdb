@@ -5,8 +5,21 @@ This is a React-based user dashboard application built with Vite, featuring Fire
 # User Preferences
 
 Preferred communication style: Simple, everyday language.
+Naming convention: All filenames use kebab-case (e.g., user-service.ts, add-user-modal.tsx)
 
 # Recent Changes
+
+## October 13, 2025 - File Naming Convention
+- **Kebab-Case Conversion**: Converted all filenames to kebab-case naming convention
+  - Services: userService.ts → user-service.ts, weatherService.ts → weather-service.ts, authService.ts → auth-service.ts
+  - Hooks: useAddUser.ts → use-add-user.ts, useDeleteUser.ts → use-delete-user.ts, useUpdateUser.ts → use-update-user.ts, useUsers.ts → use-users.ts
+  - Schemas: userSchema.ts → user-schema.ts
+  - Components: AddUserModal.tsx → add-user-modal.tsx, EditUserModal.tsx → edit-user-modal.tsx, UserTable.tsx → user-table.tsx, Login.tsx → login.tsx
+  - Providers: AuthProvider.tsx → auth-provider.tsx, ChakraProvider.tsx → chakra-provider.tsx, QueryProvider.tsx → query-provider.tsx
+  - Utilities: formatTimezone.ts → format-timezone.ts
+  - App files: App.tsx → app.tsx, App.css → app.css
+  - Updated all import statements across the codebase to use new kebab-case filenames
+  - Vite config optimized to exclude Firebase from optimizeDeps (prevents build errors)
 
 ## October 11, 2025 - Form Validation Enhancement
 - **React Hook Form Integration**: Replaced local state management with react-hook-form
@@ -52,29 +65,34 @@ The project uses a feature-based architecture where code is organized by feature
 src/
   features/
     users/
-      components/       # UI components for user feature
-      services/         # Business logic and API calls
-      hooks/           # Custom React hooks
-      index.js         # Feature exports
-  providers/          # Global providers (Chakra UI, React Query)
-  App.jsx            # Main application component
-  firebase.js        # Firebase configuration
+      components/       # UI components for user feature (kebab-case: user-table.tsx, add-user-modal.tsx, etc.)
+      services/         # Business logic and API calls (kebab-case: user-service.ts, weather-service.ts)
+      hooks/           # Custom React hooks (kebab-case: use-users.ts, use-add-user.ts, etc.)
+      schemas/         # Validation schemas (kebab-case: user-schema.ts)
+      index.ts         # Feature exports
+  providers/          # Global providers (kebab-case: auth-provider.tsx, chakra-provider.tsx, query-provider.tsx)
+  components/         # Shared components (kebab-case: login.tsx)
+  services/           # Global services (kebab-case: auth-service.ts)
+  utils/              # Utility functions (kebab-case: format-timezone.ts)
+  app.tsx             # Main application component
+  firebase.ts         # Firebase configuration
 ```
 
 ### Users Feature Components
-- **UserTable**: Main dashboard displaying users in a table with CRUD operations
-- **AddUserModal**: Dialog with form to add new users (name, zip code)
-- **EditUserModal**: Dialog with form to edit existing users
+- **user-table.tsx**: Main dashboard displaying users in a table with CRUD operations
+- **add-user-modal.tsx**: Dialog with form to add new users (name, zip code)
+- **edit-user-modal.tsx**: Dialog with form to edit existing users
 
 ### Services Layer
-- **userService.js**: Firebase CRUD operations (getUsers, addUser, updateUser, deleteUser)
-- **weatherService.js**: OpenWeatherMap API integration for location data
+- **user-service.ts**: Firebase CRUD operations (getUsers, addUser, updateUser, deleteUser)
+- **weather-service.ts**: OpenWeatherMap API integration for location data
+- **auth-service.ts**: Firebase Authentication operations (Google sign-in, sign-out, auth state)
 
 ### Custom Hooks
-- **useUsers**: Fetches all users with React Query
-- **useAddUser**: Mutation hook for adding users with location data
-- **useUpdateUser**: Mutation hook for updating users (re-fetches location if zip changes)
-- **useDeleteUser**: Mutation hook for deleting users
+- **use-users.ts**: Fetches all users with React Query
+- **use-add-user.ts**: Mutation hook for adding users with location data
+- **use-update-user.ts**: Mutation hook for updating users (re-fetches location if zip changes)
+- **use-delete-user.ts**: Mutation hook for deleting users
 
 ## Development Configuration
 - **Dev Server**: Vite dev server running on port 5000
@@ -118,9 +136,9 @@ src/
 # External Dependencies
 
 ## Firebase Integration
-- **Service**: Firebase Realtime Database
+- **Service**: Firebase Realtime Database + Firebase Authentication
 - **SDK Version**: firebase@12.4.0
-- **Configuration File**: `src/firebase.js` - initializes Firebase app and database connection
+- **Configuration File**: `src/firebase.ts` - initializes Firebase app, database, and auth connection
 - **Environment Variables**: Configured via Vite's import.meta.env (prefix: VITE_)
   - VITE_FIREBASE_API_KEY - Firebase API key
   - VITE_FIREBASE_AUTH_DOMAIN - Authentication domain
@@ -141,7 +159,7 @@ src/
 
 ## OpenWeatherMap API
 - **Service**: Weather and location data API
-- **API Key**: Hardcoded in weatherService.js (7afa46f2e91768e7eeeb9001ce40de19)
+- **API Key**: Configured via environment variable VITE_OPENWEATHER_API_KEY
 - **Endpoint**: `https://api.openweathermap.org/data/2.5/weather`
 - **Purpose**: Fetches latitude, longitude, and timezone based on zip code
 - **Data Retrieved**:

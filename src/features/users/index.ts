@@ -1,7 +1,7 @@
-export { UserTable } from './components/UserTable';
-export { AddUserModal } from './components/AddUserModal';
-export { EditUserModal } from './components/EditUserModal';
-export { useUsers } from './hooks/useUsers';
-export { useAddUser } from './hooks/useAddUser';
-export { useUpdateUser } from './hooks/useUpdateUser';
-export { useDeleteUser } from './hooks/useDeleteUser';
+export { UserTable } from './components/user-table';
+export { AddUserModal } from './components/add-user-modal';
+export { EditUserModal } from './components/edit-user-modal';
+export { useUsers } from './hooks/use-users';
+export { useAddUser } from './hooks/use-add-user';
+export { useUpdateUser } from './hooks/use-update-user';
+export { useDeleteUser } from './hooks/use-delete-user';
