@@ -17,22 +17,24 @@ export function Login() {
   };
 
   return (
-    <Box height="full">
-      <Container maxW="md" py={{ base: "24", md: "32" }}>
-        <Stack gap="8">
-          <Stack gap={{ base: "2", md: "3" }}>
-            <Heading size={{ base: "2xl", md: "3xl" }}>
-              Sign in to manage users
-            </Heading>
-          </Stack>
+    <Flex minH="100vh" align="center" justify="center">
+      <Box height="full">
+        <Container maxW="md" py={{ base: "24", md: "32" }}>
+          <Stack gap="8">
+            <Stack gap={{ base: "2", md: "3" }}>
+              <Heading size={{ base: "2xl", md: "3xl" }}>
+                Sign in to manage users
+              </Heading>
+            </Stack>
 
-          <Stack gap="4">
-            <SocialLoginButton onClick={handleSignIn} icon={<BsGoogle />}>
-              Continue with Google
-            </SocialLoginButton>
+            <Stack gap="4">
+              <SocialLoginButton onClick={handleSignIn} icon={<BsGoogle />}>
+                Continue with Google
+              </SocialLoginButton>
+            </Stack>
           </Stack>
-        </Stack>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </Flex>
   );
 }
