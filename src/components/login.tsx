@@ -13,11 +13,16 @@ export function Login() {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center" bg="bg.panel">
+    <Flex
+      minH="100vh"
+      align="center"
+      justify="center"
+      bg={{ base: "white", _dark: "black" }}
+    >
       <Box
         maxW="md"
         w="full"
-        bg="bg.panel"
+        bg={{ base: "white", _dark: "black" }}
         p={8}
         borderRadius="lg"
         boxShadow="lg"

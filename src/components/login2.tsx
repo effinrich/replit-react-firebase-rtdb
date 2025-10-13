@@ -25,10 +25,14 @@ export function Login() {
         borderRadius="lg"
         boxShadow="lg"
         textAlign="center"
+        bg={{ base: "white", _dark: "gray.900" }}
       >
         <Stack gap="8">
           <Stack gap={{ base: "2", md: "3" }}>
-            <Heading size={{ base: "2xl", md: "3xl" }}>
+            <Heading
+              size={{ base: "2xl", md: "3xl" }}
+              color={{ base: "purple.900", _dark: "white" }}
+            >
               Sign in to manage users
             </Heading>
           </Stack>
