@@ -26,7 +26,7 @@ export function Login() {
   };
 
   return (
-    <Flex height="full" flex="1">
+    <Box height="full">
       <Flex direction="column" flex="1.5">
         <HStack justify="space-between" px={{ base: "4", md: "8" }} minH="16">
           <Logo />
@@ -35,7 +35,7 @@ export function Login() {
           </Link>
         </HStack>
 
-        <Container maxW="md" flex="1" py={{ base: "24", md: "32" }}>
+        <Container maxW="md" py={{ base: "24", md: "32" }}>
           <Stack gap="8">
             <Stack gap={{ base: "2", md: "3" }}>
               <Heading size={{ base: "2xl", md: "3xl" }}>
@@ -51,6 +51,6 @@ export function Login() {
           </Stack>
         </Container>
       </Flex>
-    </Flex>
+    </Box>
   );
 }
