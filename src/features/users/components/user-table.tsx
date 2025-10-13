@@ -15,8 +15,8 @@ import { useUsers } from "../hooks/use-users";
 import { useDeleteUser } from "../hooks/use-delete-user";
 import { AddUserModal } from "./add-user-modal";
 import { EditUserModal } from "./edit-user-modal";
-import { Logo } from '../../../components/logo'
 import { formatTimezone } from "../../../utils/format-timezone";
+import { Logo } from "../../../components/logo";
 import { useAuth } from "../../../providers/auth-provider";
 import { User } from "../../../types/user";
 
@@ -81,8 +81,7 @@ export function UserTable() {
       >
         <Flex justify="space-between" align="center">
           <HStack justify="space-between">
-          <Logo />
-          <HStack gap={4}>
+            <Logo />
             <Flex align="center" gap={3}>
               <Avatar.Root
                 size="sm"
@@ -106,7 +105,6 @@ export function UserTable() {
             <Button size="sm" variant="outline" onClick={signOut}>
               Sign Out
             </Button>
-          </HStack>
           </HStack>
         </Flex>
       </Box>
