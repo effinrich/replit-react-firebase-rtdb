@@ -15,6 +15,7 @@ import { useUsers } from "../hooks/use-users";
 import { useDeleteUser } from "../hooks/use-delete-user";
 import { AddUserModal } from "./add-user-modal";
 import { EditUserModal } from "./edit-user-modal";
+import { Logo } from '../../../components/logo'
 import { formatTimezone } from "../../../utils/format-timezone";
 import { useAuth } from "../../../providers/auth-provider";
 import { User } from "../../../types/user";
@@ -79,9 +80,8 @@ export function UserTable() {
         bg={{ base: "purple.900", _dark: "gray.900" }}
       >
         <Flex justify="space-between" align="center">
-          <Heading size="xl" color={{ base: "purple.900", _dark: "white" }}>
-            User Dashboard
-          </Heading>
+          <HStack justify="space-between">
+          <Logo />
           <HStack gap={4}>
             <Flex align="center" gap={3}>
               <Avatar.Root
@@ -97,7 +97,7 @@ export function UserTable() {
                 </Text>
                 <Text
                   fontSize="xs"
-                  color={{ base: "purple.900", _dark: "gray.200" }}
+                  color={{ base: "purple.900", _dark: "gray.400" }}
                 >
                   {authUser?.email}
                 </Text>
@@ -107,12 +107,13 @@ export function UserTable() {
               Sign Out
             </Button>
           </HStack>
+          </HStack>
         </Flex>
       </Box>
 
       <Box p={8}>
         <Flex justify="space-between" align="center" mb={6}>
-          <Heading size="lg">Users</Heading>
+          <Heading size="xl">Users</Heading>
           <Button colorScheme="purple" onClick={() => setIsAddModalOpen(true)}>
             Add User
           </Button>
