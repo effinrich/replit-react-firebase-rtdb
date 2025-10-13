@@ -25,7 +25,9 @@ export function Login() {
       >
         <VStack gap={6}>
           <Heading size="2xl">User Dashboard</Heading>
-          <Text fontSize="lg">Sign in to manage your users</Text>
+          <Text fontSize="lg" color="gray.600">
+            Sign in to manage your users
+          </Text>
           <Button size="lg" onClick={handleSignIn} width="full">
             Sign in with Google
           </Button>
