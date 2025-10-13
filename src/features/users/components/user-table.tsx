@@ -79,34 +79,34 @@ export function UserTable() {
         py={4}
         bg={{ base: "purple.900", _dark: "gray.900" }}
       >
-        <Flex justify="space-between" align="center">
-          <HStack justify="space-between">
-            <Logo />
-            <Flex align="center" gap={3}>
-              <Avatar.Root
-                size="sm"
-                name={authUser?.displayName || authUser?.email || undefined}
-                src={authUser?.photoURL || undefined}
+        {/* <Flex justify="space-between" align="center"> */}
+        <HStack justify="space-between">
+          <Logo />
+          <Flex align="center" gap={3}>
+            <Avatar.Root
+              size="sm"
+              name={authUser?.displayName || authUser?.email || undefined}
+              src={authUser?.photoURL || undefined}
+            >
+              <Avatar.Image />
+            </Avatar.Root>
+            <Box>
+              <Text fontWeight="medium" fontSize="sm">
+                {authUser?.displayName || "User"}
+              </Text>
+              <Text
+                fontSize="xs"
+                color={{ base: "purple.900", _dark: "gray.400" }}
               >
-                <Avatar.Image />
-              </Avatar.Root>
-              <Box>
-                <Text fontWeight="medium" fontSize="sm">
-                  {authUser?.displayName || "User"}
-                </Text>
-                <Text
-                  fontSize="xs"
-                  color={{ base: "purple.900", _dark: "gray.400" }}
-                >
-                  {authUser?.email}
-                </Text>
-              </Box>
-            </Flex>
-            <Button size="sm" variant="outline" onClick={signOut}>
-              Sign Out
-            </Button>
-          </HStack>
-        </Flex>
+                {authUser?.email}
+              </Text>
+            </Box>
+          </Flex>
+          <Button size="sm" variant="outline" onClick={signOut}>
+            Sign Out
+          </Button>
+        </HStack>
+        {/* </Flex> */}
       </Box>
 
       <Box p={8}>
