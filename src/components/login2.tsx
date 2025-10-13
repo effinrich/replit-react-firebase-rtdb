@@ -17,7 +17,12 @@ export function Login() {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center">
+    <Flex
+      minH="100vh"
+      align="center"
+      justify="center"
+      bg={{ base: "white", _dark: "gray.900" }}
+    >
       <Box
         maxW="md"
         w="full"

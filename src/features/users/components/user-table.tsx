@@ -71,9 +71,17 @@ export function UserTable() {
 
   return (
     <Box>
-      <Box bg="white" borderBottom="1px" borderColor="gray.200" px={8} py={4}>
+      <Box
+        borderBottom="1px"
+        borderColor="gray.200"
+        px={8}
+        py={4}
+        bg={{ base: "purple.900", _dark: "gray.900" }}
+      >
         <Flex justify="space-between" align="center">
-          <Heading size="xl">User Dashboard</Heading>
+          <Heading size="xl" color={{ base: "white", _dark: "purple.900" }}>
+            User Dashboard
+          </Heading>
           <HStack gap={4}>
             <Flex align="center" gap={3}>
               <Avatar.Root
