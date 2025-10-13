@@ -13,11 +13,11 @@ export function Login() {
   };
 
   return (
-    <Flex minH="100vh" align="center" justify="center" bg="gray.50">
+    <Flex minH="100vh" align="center" justify="center" bg="bg.panel">
       <Box
         maxW="md"
         w="full"
-        bg="white"
+        bg="bg.panel"
         p={8}
         borderRadius="lg"
         boxShadow="lg"
